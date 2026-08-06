@@ -1,0 +1,130 @@
+generated: '2026-08-05'
+method: searched
+source: >-
+  https://vizgen.github.io/vizgen-postprocessing/command_line_interface/index.html,
+  https://raw.githubusercontent.com/Vizgen/vizgen-postprocessing/HEAD/src/vpt/cmd_args.py,
+  https://raw.githubusercontent.com/Vizgen/vizgen-postprocessing/HEAD/README.md
+description: >-
+  The Vizgen Post-processing Tool (`vpt`) command surface. VPT is Vizgen's primary
+  public developer interface — there is no web API — a command-line toolkit for
+  reprocessing and refining the single-cell outputs of MERSCOPE experiments on a
+  workstation, HPC cluster, or cloud. Commands below are enumerated verbatim from the
+  argparse subparser registration in `src/vpt/cmd_args.py` at HEAD (the same source the
+  published docs render via sphinx-argparse); the tool itself is catalogued in
+  packages/vizgen-packages.yml.
+docs: https://vizgen.github.io/vizgen-postprocessing/command_line_interface/index.html
+repo: https://github.com/Vizgen/vizgen-postprocessing
+version: 1.3.3
+license: Apache-2.0
+usage: vpt [OPTIONS] COMMAND [arguments]
+install:
+  pip: pip install vpt
+  pip_all_extras: pip install vpt[all]
+  docker: docker pull vzgdocker/vpt
+  poetry: git clone https://github.com/Vizgen/vizgen-postprocessing && poetry install
+requirements:
+  python: '>=3.9,<3.11'
+  os: Linux (Ubuntu 22.04 recommended), macOS, or Windows
+  ram: 16 GB minimum; 32 GB+ recommended for large tissue sections
+  gpu: CUDA-capable GPU required for production CellposeSAM workloads (~6 GB VRAM practical minimum)
+  system_libraries: [libgl, 'libvips >= 8.12']
+global_options:
+  - {name: --processes, description: Number of parallel processes to use when executing locally.}
+  - {name: --aws-profile-name, description: Named profile for AWS access.}
+  - {name: --aws-access-key, description: AWS access key from key / secret pair.}
+  - {name: --aws-secret-key, description: AWS secret from key / secret pair.}
+  - {name: --gcs-service-account-key, description: Path to a Google service account key JSON file; not needed when authenticated via gcloud.}
+  - {name: --verbose, description: Display progress messages during execution.}
+  - {name: --profile-execution-time, description: Path to profiler output file.}
+  - {name: --log-level, description: 'Log level 1-5, corresponding to debug, info, warning, error, crit.'}
+  - {name: --log-file, description: Path to log output file; defaults to standard output.}
+  - {name: -h/--help, description: Show the help message and exit.}
+commands:
+  segmentation:
+    - name: run-segmentation
+      description: >-
+        Top-level interface for this CLI which invokes the segmentation functionality of
+        the tool. It is intended for users who would like to run the program with minimal
+        additional configuration. Specifically, it executes: prepare-segmentation,
+        run-segmentation-on-tile, and compile-tile-segmentation.
+      required_args: [--segmentation-algorithm, --input-images, --input-micron-to-mosaic, --output-path]
+    - name: prepare-segmentation
+      description: >-
+        Generates a segmentation specification json file to be used for cell segmentation
+        tasks. The segmentation specification json includes specification for the algorithm
+        to run, the paths for all images for each stain for each z index, the micron to
+        mosaic pixel transformation matrix, the number of tiles, and the window coordinates
+        for each tile.
+      required_args: [--segmentation-algorithm, --input-images, --output-path, --input-micron-to-mosaic]
+    - name: run-segmentation-on-tile
+      description: >-
+        Executes the segmentation algorithm on a specific tile of the mosaic images. This
+        functionality is intended both for visualizing a preview of the segmentation (run
+        only one tile), and for distributing jobs using an orchestration tool such as
+        Nextflow.
+    - name: compile-tile-segmentation
+      description: >-
+        Combines the per-tile segmentation outputs into a single, internally-consistent
+        parquet file containing all of the segmentation boundaries found in the experiment.
+    - name: generate-segmentation-metrics
+      description: >-
+        Computes a number of segmentation metrics and figures to assess the quality of cell
+        segmentation.
+  single_cell_outputs:
+    - name: derive-entity-metadata
+      description: >-
+        Uses the segmentation boundaries to calculate the geometric attributes of each
+        Entity. These attributes include the position, volume, and morphological features.
+    - name: partition-transcripts
+      description: >-
+        Uses the segmentation boundaries to determine which Entity, if any, contains each
+        detected transcript. Outputs an Entity by gene matrix, and may optionally output a
+        detected transcript csv with an additional column indicating the containing Entity.
+    - name: sum-signals
+      description: >-
+        Uses the segmentation boundaries to find the intensity of each mosaic image in each
+        Entity. Outputs both the summed intensity of the raw images and the summed intensity
+        of high-pass filtered images (reduces the effect of background fluorescence).
+    - name: update-vzg
+      description: >-
+        Updates an existing .vzg file with new segmentation boundaries and the corresponding
+        expression matrix. NOTE: This functionality requires enough disk space to unpack the
+        existing .vzg file.
+  conversion_utilities:
+    - name: convert-geometry
+      description: >-
+        Converts entity boundaries produced by a different tool into a vpt compatible parquet
+        file. In the process, each of the input entities is checked for geometric validity,
+        overlap with other geometries, and assigned a globally-unique EntityID to facilitate
+        other processing steps.
+      note: README lists GeoJSON and HDF5 as supported import formats.
+    - name: convert-to-ome
+      description: >-
+        Transforms the large 16-bit mosaic tiff images produced by the MERSCOPE into a OME
+        pyramidal tiff.
+    - name: convert-to-rgb-ome
+      description: >-
+        Converts up to three flat tiff images into a rgb OME-tiff pyramidal images. If a rgb
+        channel input isn't specified, the channel will be dark (all 0's).
+    - name: extract-image-patch
+      description: >-
+        Extracts a patch of specified coordinates and channels from the 16-bit mosaic tiff
+        images produced by the MERSCOPE as an 8-bit RGB PNG file.
+plugins:
+  architecture: >-
+    VPT segmentation algorithms are pluggable. Each plugin self-registers on install and
+    contributes a `segmentation_family` value usable in the segmentation specification JSON.
+  docs: https://vizgen.github.io/vizgen-postprocessing/experimental_features/plugin_architecture.html
+  families:
+    - {family: Watershed, package: vpt-plugin-watershed, note: 'Watershed with Stardist-derived seeds (legacy; also shipped as a vpt[all] extra).'}
+    - {family: Cellpose, package: vpt-plugin-cellpose, note: 'Legacy Cellpose family; also shipped as a vpt[all] extra.'}
+    - {family: Cellpose2, package: vpt-plugin-cellpose2}
+    - {family: CellposeSAM, package: vpt-plugin-cellposesam, note: Cellpose 4 + SAM; CUDA GPU recommended.}
+    - {family: InstanSeg, package: vpt-plugin-instanseg, note: Uses CUDA, MPS, or CPU depending on availability.}
+workflow_integration:
+  nextflow: >-
+    Nextflow-compatible; the Docker image ships Nextflow, AWS CLI v2, example segmentation
+    algorithm JSON files, and a simple pipeline suitable for HPC deployment.
+  cloud_storage: >-
+    Input and output paths may be local, S3 (via --aws-profile-name or key/secret), or GCS
+    (via --gcs-service-account-key or ambient gcloud auth).

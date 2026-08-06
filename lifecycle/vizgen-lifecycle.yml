@@ -1,0 +1,62 @@
+generated: '2026-08-05'
+method: searched
+source: >-
+  https://github.com/Vizgen/vizgen-postprocessing/releases,
+  https://raw.githubusercontent.com/Vizgen/vizgen-postprocessing/HEAD/.github/workflows/main.yml,
+  https://pypi.org/pypi/vpt/json, https://vizgen.com/vizgen-support-vizgen/,
+  https://vizgen.com/terms-of-use/
+description: >-
+  Vizgen operates no public web API, so there is no API version policy, no Sunset/Deprecation
+  header practice, and no API status page. The lifecycle surface that does exist is the
+  release and support lifecycle of the open-source Vizgen Post-processing Tool (VPT) and the
+  instrument software it serves. Absences below are recorded as probed facts, not omissions.
+versioning:
+  scheme: semver
+  applies_to: vpt (PyPI), vpt-core, vpt-plugin-* (PyPI), vzgdocker/vpt (Docker Hub)
+  mechanism: git tag vMAJOR.MINOR.PATCH, cut by python-semantic-release from conventional commits
+  current: 1.3.3
+  released: '2026-04-30'
+  docs: https://github.com/Vizgen/vizgen-postprocessing/releases
+  api_versioning: null
+  notes: >-
+    No API version header, path version, or dated version train exists — there is no API.
+    Consumers pin the toolkit by PyPI version or Docker tag.
+support_window:
+  python: '>=3.9,<3.11'
+  notes: >-
+    VPT declares a supported Python range in package metadata; Vizgen publishes no separate
+    LTS or end-of-life calendar for VPT releases. Legacy Cellpose and Watershed segmentation
+    families are documented as "legacy" extras and newer families ship as separate plugin
+    packages, but no removal date is published for the legacy extras.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  notes: >-
+    No published deprecation policy and no RFC 8594 Sunset/Deprecation header practice —
+    neither applicable nor found. Breaking changes are signalled only by the semver major
+    version and the "Breaking" section of a GitHub release body.
+status_page:
+  url: null
+  notes: >-
+    No status page found. Probed https://status.vizgen.com (DNS did not resolve, curl exit 6)
+    and https://vizgen.statuspage.io (redirects to atlassian.com/software/statuspage — the
+    unclaimed-subdomain marketing page, not a real status page). MERSCOPE is an on-premises
+    instrument platform, so there is no hosted service to report availability for.
+sla:
+  url: null
+  public_uptime_target: null
+  notes: Service and support terms are handled through instrument service contracts, not a published SLA.
+support:
+  url: https://vizgen.com/vizgen-support-vizgen/
+  issues: https://github.com/Vizgen/vizgen-postprocessing/issues
+  notes: Product support runs through Vizgen's support page; toolkit defects go to GitHub Issues.
+legal:
+  terms_of_use: https://vizgen.com/terms-of-use/
+  privacy_policy: https://vizgen.com/privacy-policy/
+  toolkit_license: Apache-2.0
+deprecated_operations: []
+x-evidence:
+  - {url: 'https://api.github.com/repos/Vizgen/vizgen-postprocessing/releases?per_page=15', http_status: 200}
+  - {url: 'https://pypi.org/pypi/vpt/json', http_status: 200}
+  - {url: 'https://vizgen.com/vizgen-support-vizgen/', http_status: 200}

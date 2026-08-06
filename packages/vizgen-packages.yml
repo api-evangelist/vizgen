@@ -1,0 +1,132 @@
+generated: '2026-08-05'
+method: searched
+source: >-
+  https://pypi.org/pypi/vpt/json, https://pypi.org/pypi/vpt-core/json,
+  https://api.github.com/orgs/Vizgen/repos, https://hub.docker.com/r/vzgdocker/vpt
+description: >-
+  First-party Vizgen open-source packages. Vizgen publishes no client SDK for a web
+  API (it operates no public REST/GraphQL API); what it does publish is the Vizgen
+  Post-processing Tool (VPT) — an Apache-2.0 Python CLI plus an importable core
+  library and a family of segmentation plugins — used to reprocess MERSCOPE
+  single-cell outputs. Every package below was confirmed live on PyPI at fetch time
+  (HTTP 200) with `Author: Vizgen` and a Vizgen GitHub repository URL, which is what
+  `official: true` is asserting. No npm, Maven Central, NuGet, RubyGems, Packagist,
+  crates.io, or pkg.go.dev package was found for this provider.
+docs: https://vizgen.github.io/vizgen-postprocessing/
+packages:
+  - language: python
+    registry: pypi
+    name: vpt
+    version: 1.3.3
+    released: '2026-04-30'
+    url: https://pypi.org/project/vpt/
+    source: https://github.com/Vizgen/vizgen-postprocessing
+    install: pip install vpt
+    license: Apache-2.0
+    requires_python: '>=3.9,<3.11'
+    description: >-
+      Command line tool for highly parallelized processing of Vizgen MERSCOPE data —
+      segmentation, single-cell output regeneration, image conversion.
+    official: true
+    x-evidence: {url: 'https://pypi.org/pypi/vpt/json', http_status: 200}
+  - language: python
+    registry: pypi
+    name: vpt-core
+    version: 1.2.0
+    released: '2024-09-20'
+    url: https://pypi.org/project/vpt-core/
+    source: https://github.com/Vizgen/vpt-core
+    install: pip install vpt-core
+    license: Apache-2.0
+    requires_python: '>=3.9,<3.11'
+    description: >-
+      Core library components of the Vizgen Post-processing Tool — importable
+      geometry, IO, and segmentation primitives shared by vpt and its plugins.
+    official: true
+    x-evidence: {url: 'https://pypi.org/pypi/vpt-core/json', http_status: 200}
+  - language: python
+    registry: pypi
+    name: vpt-plugin-cellpose
+    version: 1.0.2
+    released: '2024-09-20'
+    url: https://pypi.org/project/vpt-plugin-cellpose/
+    source: https://github.com/Vizgen/vpt-plugin-cellpose
+    install: pip install vpt-plugin-cellpose
+    license: Apache-2.0
+    description: 'Cellpose segmentation plugin for VPT (legacy family; also shipped as the vpt[all] extra).'
+    official: true
+    x-evidence: {url: 'https://pypi.org/pypi/vpt-plugin-cellpose/json', http_status: 200}
+  - language: python
+    registry: pypi
+    name: vpt-plugin-cellpose2
+    version: 1.0.1
+    released: '2024-09-20'
+    url: https://pypi.org/project/vpt-plugin-cellpose2/
+    source: https://github.com/Vizgen/vpt-plugin-cellpose2
+    install: pip install vpt-plugin-cellpose2
+    license: Apache-2.0
+    description: 'Cellpose 2 segmentation plugin for VPT (segmentation_family: Cellpose2).'
+    official: true
+    x-evidence: {url: 'https://pypi.org/pypi/vpt-plugin-cellpose2/json', http_status: 200}
+  - language: python
+    registry: pypi
+    name: vpt-plugin-cellposesam
+    version: 1.0.0
+    released: '2026-04-28'
+    url: https://pypi.org/project/vpt-plugin-cellposesam/
+    source: https://github.com/Vizgen/vpt-plugin-cellposesam
+    install: pip install vpt-plugin-cellposesam
+    license: Apache-2.0
+    description: 'CellposeSAM (Cellpose 4 + SAM) segmentation plugin for VPT (segmentation_family: CellposeSAM).'
+    official: true
+    x-evidence: {url: 'https://pypi.org/pypi/vpt-plugin-cellposesam/json', http_status: 200}
+  - language: python
+    registry: pypi
+    name: vpt-plugin-instanseg
+    version: 1.0.0
+    released: '2026-04-28'
+    url: https://pypi.org/project/vpt-plugin-instanseg/
+    source: https://github.com/Vizgen/vpt-plugin-instanseg
+    install: pip install vpt-plugin-instanseg
+    license: Apache-2.0
+    description: 'InstanSeg segmentation plugin for VPT (segmentation_family: InstanSeg).'
+    official: true
+    x-evidence: {url: 'https://pypi.org/pypi/vpt-plugin-instanseg/json', http_status: 200}
+  - language: python
+    registry: pypi
+    name: vpt-plugin-watershed
+    version: 1.0.2
+    released: '2024-09-20'
+    url: https://pypi.org/project/vpt-plugin-watershed/
+    source: https://github.com/Vizgen/vpt-plugin-watershed
+    install: pip install vpt-plugin-watershed
+    license: Apache-2.0
+    description: Watershed segmentation plugin for VPT, using Stardist-derived seeds.
+    official: true
+    x-evidence: {url: 'https://pypi.org/pypi/vpt-plugin-watershed/json', http_status: 200}
+containers:
+  - registry: docker-hub
+    name: vzgdocker/vpt
+    url: https://hub.docker.com/r/vzgdocker/vpt
+    pull: docker pull vzgdocker/vpt
+    official: true
+    description: >-
+      Reproducible VPT analysis environment; bundles vpt and all dependencies plus
+      Nextflow, AWS CLI v2, example segmentation algorithm JSON files, and a simple
+      Nextflow pipeline for HPC deployment.
+    x-evidence: {url: 'https://hub.docker.com/r/vzgdocker/vpt', http_status: 200}
+not_found:
+  - registry: npm
+    note: No first-party Vizgen package found.
+  - registry: maven-central
+    note: No first-party Vizgen package found.
+  - registry: nuget
+    note: No first-party Vizgen package found.
+  - registry: rubygems
+    note: No first-party Vizgen package found.
+  - registry: packagist
+    note: No first-party Vizgen package found.
+  - registry: crates.io
+    note: No first-party Vizgen package found.
+  - registry: pkg.go.dev
+    note: No first-party Vizgen package found.

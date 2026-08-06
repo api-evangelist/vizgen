@@ -1,0 +1,52 @@
+generated: '2026-08-05'
+method: searched
+source: https://github.com/Vizgen/vizgen-postprocessing/tree/develop/example_analysis_algorithm
+description: >-
+  Vizgen's published example payloads for the one machine-readable contract it does define:
+  the VPT segmentation algorithm specification JSON, the document `vpt run-segmentation
+  --segmentation-algorithm` consumes. These are the provider's own example files, saved
+  verbatim from the vizgen-postprocessing repository — nothing here is authored or modified
+  by API Evangelist. There is no OpenAPI to attach request/response examples to; this is the
+  equivalent example surface for a CLI-shaped developer contract.
+docs: https://vizgen.github.io/vizgen-postprocessing/segmentation_options/json_file_format.html
+format:
+  name: VPT segmentation algorithm specification
+  media_type: application/json
+  top_level_keys:
+    - {key: experiment_properties, description: Experiment-level properties such as z-plane spacing.}
+    - {key: segmentation_tasks, description: One or more segmentation task definitions — family, entity type, stain-to-channel mapping, and algorithm parameters.}
+    - {key: segmentation_task_fusion, description: How the outputs of multiple segmentation tasks are fused into final entity boundaries.}
+    - {key: output_files, description: The output artifacts the run should produce.}
+  reference:
+    task_definition: https://vizgen.github.io/vizgen-postprocessing/segmentation_options/segmentation_task_definition.html
+    task_fusion: https://vizgen.github.io/vizgen-postprocessing/segmentation_options/task_fusion_definition.html
+examples:
+  - file: examples/vizgen-cellpose_default_1_ZLevel.json
+    upstream: https://github.com/Vizgen/vizgen-postprocessing/blob/develop/example_analysis_algorithm/cellpose_default_1_ZLevel.json
+    description: Default Cellpose segmentation over a single z-level.
+    x-evidence: {http_status: 200}
+  - file: examples/vizgen-cellpose_default_3_ZLevel.json
+    upstream: https://github.com/Vizgen/vizgen-postprocessing/blob/develop/example_analysis_algorithm/cellpose_default_3_ZLevel.json
+    description: Default Cellpose segmentation over three z-levels.
+    x-evidence: {http_status: 200}
+  - file: examples/vizgen-cellpose_default_3_ZLevel_nuclei_only.json
+    upstream: https://github.com/Vizgen/vizgen-postprocessing/blob/develop/example_analysis_algorithm/cellpose_default_3_ZLevel_nuclei_only.json
+    description: Default Cellpose segmentation over three z-levels, nuclei only (no cytoplasm stain).
+    x-evidence: {http_status: 200}
+  - file: examples/vizgen-watershed_default.json
+    upstream: https://github.com/Vizgen/vizgen-postprocessing/blob/develop/example_analysis_algorithm/watershed_default.json
+    description: Default watershed segmentation with Stardist-derived seeds.
+    x-evidence: {http_status: 200}
+output_data_formats:
+  docs: https://vizgen.github.io/vizgen-postprocessing/output_data_formats/index.html
+  documented:
+    - detected transcripts format
+    - entity-by-gene matrix format
+    - entity metadata format
+    - geometry file format
+    - biological entities and segmentation
+    - VZG file format
+  note: >-
+    Vizgen documents these MERSCOPE output formats in prose and tables; it publishes no JSON
+    Schema, Avro, or Protobuf definition for them, so no json-schema/ artifact was written
+    rather than one being authored on Vizgen's behalf.

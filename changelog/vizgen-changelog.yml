@@ -1,0 +1,73 @@
+generated: '2026-08-05'
+method: searched
+source: https://github.com/Vizgen/vizgen-postprocessing/releases
+description: >-
+  Vizgen publishes no API changelog — there is no public web API. The one dated,
+  machine-readable release history it does publish is the GitHub Releases feed for the
+  Vizgen Post-processing Tool (VPT), cut automatically by python-semantic-release from
+  conventional commits (the release bodies are generated Feature/Fix/Documentation/Breaking
+  sections). Entries below are the recent window, captured verbatim from the GitHub
+  Releases API.
+docs: https://github.com/Vizgen/vizgen-postprocessing/releases
+scope: vpt (Vizgen Post-processing Tool)
+versioning:
+  scheme: semver
+  mechanism: git tag (vMAJOR.MINOR.PATCH) published to PyPI as `vpt` and to Docker Hub as vzgdocker/vpt
+  automation: python-semantic-release via GitHub Actions (.github/workflows/main.yml)
+  current: 1.3.3
+  detail: lifecycle/vizgen-lifecycle.yml
+entries:
+  - version: v1.3.3
+    date: '2026-04-30'
+    latest: true
+    highlights:
+      - 'Documentation: update U2OS dataset download links to CloudFront'
+  - version: v1.3.2
+    date: '2026-04-29'
+    highlights:
+      - 'Fix: install OpenJDK 17 for Nextflow compatibility'
+  - version: v1.3.1
+    date: '2026-04-28'
+    highlights:
+      - 'Documentation: update documentation for new segmentation plugins (CellposeSAM, InstanSeg)'
+  - version: v1.3.0
+    date: '2024-09-20'
+    additions:
+      - MERSCOPE Ultra support (#38)
+  - version: v1.2.2
+    date: '2024-02-09'
+  - version: v1.2.1
+    date: '2024-02-09'
+  - version: v1.2.0
+    date: '2024-02-08'
+    additions:
+      - Support for Cellpose 2 workflow (#32)
+  - version: v1.1.2
+    date: '2023-08-18'
+  - version: v1.1.1
+    date: '2023-08-18'
+    highlights:
+      - 'Fix: restore build version docker tag'
+  - version: v1.1.0
+    date: '2023-08-17'
+    additions:
+      - Plugin architecture (#19)
+  - version: v1.0.2
+    date: '2023-04-25'
+    highlights:
+      - 'Fix: bug fix for update-vzg temp directory (#10)'
+  - version: v1.0.1
+    date: '2023-01-24'
+    highlights:
+      - Changed the GitHub Actions pipeline to skip deployment on Test PyPI
+  - version: v1.0.0
+    date: '2023-01-24'
+    breaking:
+      - Initial release of the tool
+    additions:
+      - Initial vpt release
+x-evidence:
+  fetched: '2026-08-05'
+  url: https://api.github.com/repos/Vizgen/vizgen-postprocessing/releases?per_page=15
+  http_status: 200
+  releases_returned: 13
