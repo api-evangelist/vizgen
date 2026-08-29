@@ -10,6 +10,17 @@ description: 'Vizgen is a spatial biology company building integrated spatial mu
   CLI and library distributed on PyPI and Docker Hub with a plugin architecture for
   segmentation algorithms, published from the Vizgen GitHub organization alongside
   documented MERSCOPE output data formats.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://vizgen.com/wp-content/uploads/2021/05/cropped-Favicon-1-270x270.png
 url: https://raw.githubusercontent.com/api-evangelist/vizgen/refs/heads/main/apis.yml
 x-type: company
